@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<h2>Projects List</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Write the line of EJS to iterate over movies using forEach -->
+    <% checklists.forEach(function(c) { %>
+      <tr>
+        <td>
+            <form action="/checklists/<%= c.id %>?_method=DELETE"
+                method="POST"
+                class="delete-form"
+            >
+                <button type="submit">X</button>
+                
+            </form>
+            <a href="/checklists/<%= c.id %>"><%= c.name %></a>
+        </td>
+      </tr>
+    <% }) %><!-- Close the forEach using EJS here -->
+  </tbody>
+</table>
+
+<%- include('../partials/footer') %>
