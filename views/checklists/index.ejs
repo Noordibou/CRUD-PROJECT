@@ -4,7 +4,7 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Project Name</th>
     </tr>
   </thead>
   <tbody>
@@ -18,8 +18,8 @@
             >
                 <button type="submit">X</button>
                 
-            </form>
-            <a href="/checklists/<%= c.id %>"><%= c.name %></a>
+                <a href="/checklists/<%= c.id %>"><%= c.projectName %></a>
+              </form>
         </td>
       </tr>
     <% }) %><!-- Close the forEach using EJS here -->

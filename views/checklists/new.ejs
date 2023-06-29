@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<h2>Enter a New Project Checklist</h2>
+<div class="container">
+<form action="/checklists" method="POST">
+    <label>Project Name:
+        <input class="form-control" type="text" name="projectName" required>
+    </label><br>
+    <label>Tasks:
+        <input class="form-control" type="text" name="tasks" required>
+    </label><br>
+    <label>Expected Days to Finish:
+        <input class="form-control" type="number" name="timeExpected" required>
+    </label><br>
+    <label>Start Date:
+        <input class="form-control" type ="date" name="startDate" min="2023-06-28" max="2026-06-28">
+    </label>
+    <br>
+    <br>
+    <!-- <button type="submit">Add Project</button> -->
+
+    <input class="btn btn-outline-success" type="submit" value="Create Project!">
+    <a class="btn btn-outline-warning" href="/checklists">Return to Projects</a>
+</form>
+</div>
+<p><%= errorMsg %></p>
+
+<%- include('../partials/footer') %>

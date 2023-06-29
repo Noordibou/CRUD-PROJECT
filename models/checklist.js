@@ -20,11 +20,14 @@ const checklistSchema = new Schema({
         // default: function () {
         //     return new Date(new Date().setFullYear(new Date().getFullYear() + 1));
         // },
+    },
+    completed:{
+        type: Boolean,
+        default: false,
     }
 
 
 });
-
 
 
 module.exports = mongoose.model('Checklist', checklistSchema);
