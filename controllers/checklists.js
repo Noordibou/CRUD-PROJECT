@@ -7,7 +7,7 @@ module.exports = {
     delete: deleteChecklist,
     edit,
     update
-
+    
 };
 
 async function index(req, res) {
@@ -16,6 +16,32 @@ async function index(req, res) {
         checklists: checklistsAll
     });
 };
+
+async function create(req, res) {
+    try {
+        await Checklist.create(req.body);
+        res.redirect('/checklists')
+    }
+    catch (err) {
+        res.render('checklists/new', {errorMsg: err.message});
+    }
+};
+
+async function show(req, res) {
+    const selectedProject = await Checklist.findById(req.params.id);
+    res.render('checklists/show', {
+        checklist: selectedProject
+    });
+};
+
+async function edit(req,res) {
+    const checklist = await Checklist.findById(req.params.id);
+    res.render('checklists/edit', {
+        title: 'Edit-To-Do',
+        checklist
+    });
+};
+
 
 async function update(req, res) {
     try {
@@ -33,35 +59,10 @@ async function update(req, res) {
 
 };
 
-async function edit(req,res) {
-    const checklist = await Checklist.findById(req.params.id);
-    res.render('checklists/edit', {
-        title: 'Edit-To-Do',
-        checklist
-    });
-};
-
-
-async function show(req, res) {
-    const selectedProject = await Checklist.findById(req.params.id);
-    res.render('checklists/show', {
-        checklist: selectedProject
-    });
-};
-
 function newChecklist(req, res) {
     res.render('checklists/new', {errorMsg: ''});
 };
 
-async function create(req, res) {
-    try {
-        await Checklist.create(req.body);
-        res.redirect('/checklists')
-    }
-    catch (err) {
-        res.render('checklists/new', {errorMsg: err.message});
-    }
-};
 
 async function deleteChecklist(req,res) {
     try {

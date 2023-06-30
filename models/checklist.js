@@ -17,16 +17,10 @@ const checklistSchema = new Schema({
     },
     dueDate: {
         type: Date,
-        // default: function() {
-        //     return new Date(new Date().setFullYear(new Date().getFullYear()));
-        //     },
+        
     
     },
-    completed:{
-        type: Boolean,
-        default: false,
-    }
-
+    
 
 });
 
