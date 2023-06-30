@@ -1,29 +1,28 @@
 <%- include('../partials/header') %>
-
+<div class="container"> 
+   <br> 
 <h2>Projects List</h2>
-<table>
-  <thead>
+<table class=" table table-hover">
+  <thead class="table-primary">
     <tr>
-      <th>Project Name</th>
+      <th scope="col">Name</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Write the line of EJS to iterate over movies using forEach -->
-    <% checklists.forEach(function(c) { %>
-      <tr>
-        <td>
-            <form action="/checklists/<%= c.id %>?_method=DELETE"
-                method="POST"
-                class="delete-form"
-            >
-                <button type="submit">X</button>
-                
-                <a href="/checklists/<%= c.id %>"><%= c.projectName %></a>
-              </form>
-        </td>
-      </tr>
-    <% }) %><!-- Close the forEach using EJS here -->
+      <% checklists.forEach(function(c) { %>
+    <tr>
+      <th scope="row"><a type="button" class="btn btn-light" href="/checklists/<%= c.id %>"><%= c.projectName %></a></th>
+
+      <td><form><a class="btn btn-outline-warning" href="/checklists/<%= c.id %>/edit">Edit</a></form></td>
+
+      <td><form action="/checklists/<%= c.id %>?_method=DELETE" method="POST"> <input class="btn btn-outline-danger" type="submit" value="delete"></form></td>
+
+    </tr>
+     <% }) %>
   </tbody>
 </table>
+</div>
 
 <%- include('../partials/footer') %>

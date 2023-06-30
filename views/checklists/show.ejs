@@ -1,33 +1,26 @@
 <%- include('../partials/header') %>
 <div class="container">
-    <table class="table">
-    <!-- <ul class="list-group list-group-flush">
-        <li class="list-group-item"><b>App:</b> Bumble</li>
-        <li class="list-group-item"><b>When:</b> Sun Feb 09 2020 </li>
-        <li class="list-group-item"><b>Where:</b> Golden Nugget</li>
-        <li class="list-group-item"><b>Thoughts:</b> Intense, needy, very negative</li>
-        <li class="list-group-item">
-             -->
-             <br>
-        <h2><%= checklist.projectName %></h2>
-        <br>
-        <thead>
-                <th>Tasks</th>
-                <th>Expected Days to Finish</th>
-                <th>Start Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><%= checklist.tasks %></td> 
-                <td><%= checklist.timeExpected %></td>
-                <td><%= checklist.startDate %></td>  
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <a class="btn btn-outline-success" href="/checklists/<%= checklist.id %>/edit">Edit Checklist</a>
-    <a class="btn btn-outline-warning" href="/checklists">Return to Projects</a>
+<table class="table">
+<br>
+<h2><%= checklist.projectName %></h2>
+<br>
+<thead class="table-primary">
+ <th>Tasks</th>
+  <th>Expected Days to Finish</th>
+ <th>Start Date</th>
+   </tr>
+</thead>
+<tbody>
+<tr>
+ <td><%= checklist.tasks %></td> 
+ <td><%= checklist.timeExpected %></td>
+<td><%= checklist.startDate %></td>  
+ </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a class="btn btn-outline-warning" href="/checklists/<%= checklist.id %>/edit">Edit Checklist</a>
+<a class="btn btn-outline-primary" href="/checklists">Return to Projects</a>
 
-    <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>
