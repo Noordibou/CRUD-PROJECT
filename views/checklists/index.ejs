@@ -7,18 +7,22 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
+      <th scope="col">Complete</th>
     </tr>
   </thead>
   <tbody>
       <% checklists.forEach(function(c) { %>
     <tr>
-      <th scope="row"><a type="button" class="btn btn-light" href="/checklists/<%= c.id %>"><%= c.projectName %></a></th>
+      <th scope="row">
+      <!-- <input onclick="updateStatus(this)" type="checkbox"> -->
+      <a type="button" class="btn btn-light" href="/checklists/<%= c.id %>"><%= c.projectName %></a>
+      </th>
 
-      <td><form><a class="btn btn-outline-warning" href="/checklists/<%= c.id %>/edit">Edit</a></form></td>
+      <td><form><a class="btn btn-outline-warning" href="/checklists/<%= c.id %>/edit"><i class="fa-solid fa-pen-to-square"></i></a></form></td>
 
-      <td><form action="/checklists/<%= c.id %>?_method=DELETE" method="POST"> <input class="btn btn-outline-danger" type="submit" value="delete"></form></td>
-
+      <td><form action="/checklists/<%= c.id %>?_method=DELETE" method="POST">
+         
+        <input  class="btn btn-outline-danger" type="submit" value="Complete"></form></td>
     </tr>
      <% }) %>
   </tbody>
