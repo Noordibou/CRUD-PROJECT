@@ -2,17 +2,17 @@
 <div class="container">
     <h1> Edit Project Checklist</h1>
 <form action="/checklists/<%= checklist.id %>?_method=PUT" method="POST">
-    <label for="name">Project Name:</label>
+    <label for="projectName">Project Name:</label>
     <input class="form-control" type="text" id="projectName" name="projectName" value="<%= checklist.projectName %>">
    <br>
-    <label for="ability">Tasks:</label>
+    <label for="tasks">Tasks:</label>
     <input class="form-control" type="text" id="tasks" name="tasks" value="<%= checklist.tasks %>">
     <br>
-    <label for="nemesis">Time Expected to Finish:</label>
+    <label for="timeExpected">Time Expected to Finish:</label>
     <input class="form-control" type="number" id="timeExpected" name="timeExpected" value="<%= checklist.timeExpected %>">
     <br>
-    <label for="strengthLevel">Start Date:</label>
-    <input class="form-control" type="date" id="startDate" name="startDate" value="<%= checklist.startDate %>">
+    <label for="duedate">Due Date:</label>
+    <input class="form-control" type="date" id="dueDate" name="dueDate" value="<%= checklist.dueDate %>">
     <br>
     <br>
     <input class="btn btn-outline-success" type="submit" value="Apply modifications">

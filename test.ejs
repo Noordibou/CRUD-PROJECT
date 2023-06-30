@@ -1,0 +1,85 @@
+//new.ejs
+<%- include('../partials/header') %>
+<h2>Enter a New Project Checklist</h2>
+<div class="container">
+    <form action="/checklists" method="POST">
+        <label>Project Name:
+            <input class="form-control" type="text" name="projectName" required>
+        </label><br>
+        <label>Tasks:</label>
+        <div id="tasksContainer">
+            <div class="task-input">
+                <input class="form-control" type="text" name="tasks[0].name" required>
+            </div>
+        </div>
+        <button type="button" onclick="addTaskInput()" class="btn btn-outline-secondary">Add Task</button>
+        <br><br>
+        <label>Expected Days to Finish:
+            <input class="form-control" type="number" name="timeExpected" required>
+        </label><br>
+        <label>Start date:
+            <input class="form-control" type="date" name="startDate" value="2023-06-22" min="2023-06-01" max="2026-12-31">
+        </label>
+        <br>
+        <br>
+        <input class="btn btn-outline-success" type="submit" value="Create Project!">
+        <a class="btn btn-outline-warning" href="/checklists">Return to Projects</a>
+    </form>
+</div>
+<p><%= errorMsg %></p>
+
+<script>
+    let taskIndex = 1;
+
+    function addTaskInput() {
+        const tasksContainer = document.getElementById('tasksContainer');
+        const taskInput = document.createElement('div');
+        taskInput.className = 'task-input';
+        taskInput.innerHTML = `<input class="form-control" type="text" name="tasks[${taskIndex}].name" required>`;
+        tasksContainer.appendChild(taskInput);
+        taskIndex++;
+    }
+</script>
+
+<%- include('../partials/footer') %>
+
+
+
+//show.ejs
+<%- include('../partials/header') %>
+<div class="container">
+    <table class="table">
+        <br>
+        <h2><%= checklist.projectName %></h2>
+        <br>
+        <thead class="table-primary">
+            <th>Tasks</th>
+            <th>Completed</th>
+            <th>Expected Days to Finish</th>
+            <th>Start Date</th>
+        </thead>
+        <tbody> 
+            
+            <tr>
+                <% for (let i = 0; i < checklist.tasks.length; i++) { %>
+                <td><%= checklist.tasks[i].name %></td>
+                <td><%= checklist.tasks[i].completed ? 'Yes' : 'No' %></td>
+                <% } %>
+                <td><%= checklist.timeExpected %></td>
+                <td><%= checklist.startDate %></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <a class="btn btn-outline-warning" href="/checklists/<%= checklist.id %>/edit">Edit Checklist</a>
+    <a class="btn btn-outline-primary" href="/checklists">Return to Projects</a>
+</div>
+
+<%- include('../partials/footer') %>
+
+
+
+<div class="container">
+   <form action="/checklists" method="POST"></form>"
+</div>

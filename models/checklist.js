@@ -15,11 +15,11 @@ const checklistSchema = new Schema({
         min: 1,
         max: 100
     },
-    startDate: {
+    dueDate: {
         type: Date,
-        default: function() {
-            return new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-            },
+        // default: function() {
+        //     return new Date(new Date().setFullYear(new Date().getFullYear()));
+        //     },
     
     },
     completed:{
