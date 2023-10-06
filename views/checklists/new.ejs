@@ -1,25 +1,62 @@
 <%- include('../partials/header') %>
-<h2>Enter a New Project Checklist</h2>
-<div class="container">
-    <form action="/checklists" method="POST">
-        <label>Project Name:
-            <input class="form-control" type="text" name="projectName" required>
-        </label><br>
-        <label>Tasks (one per line):
-            <textarea class="form-control" name="tasks" rows="6" required></textarea>
-        </label><br>
-        <label>Expected Days to Finish:
-            <input class="form-control" type="number" name="timeExpected" required>
-        </label><br>
-        <label>Due Date:
-            <input class="form-control" type="datetime-local" name="dueDate" value="2023-06-30" min="2023-06-01" max="2026-12-31">
-        </label>
-        <br>
-        <br>
-        <input class="btn btn-outline-success" type="submit" value="Create Project!">
-        <a class="btn btn-outline-warning" href="/checklists">Return to Projects</a>
-    </form>
+
+<div class="container mt-5 ">
+  <h3>Enter a New Project Checklist</h3>
+
+  <form action="/checklists" method="POST" >
+
+    <div class="form-group py-2">
+      <h6 for="projectName">Project Name:</h6>
+      <input class="form-control" type="text" id="projectName" name="projectName" required>
+    </div>
+
+    <div class="form-group py-2">
+      <h6 for="tasks">Tasks:</h6>
+      <div id="taskFields">
+        <div class="form-group">
+          <label for="task1">Task 1:</label>
+          <input class="form-control" type="text" id="task1" name="tasks">
+        </div>
+      </div>
+      <button type="button" class="btn btn-outline-primary mt-2" id="addTask">Add Task</button>
+    </div>
+
+    <div class="form-group py-2">
+      <h6 for="timeExpected">Time Expected:</h6>
+      <input class="form-control" type="number" id="timeExpected" name="timeExpected" required placeholder="Time Expected (in hours)" required min="1" max="100">
+    </div>
+
+    <div class="form-group py-2">
+      <h6 for="dueDate">Due Date:</h6>
+      <input class="form-control" type="date" id="dueDate" name="dueDate">
+    </div>
+
+    <div class="form-group pt-4">
+      <input class="btn btn-outline-success" type="submit" value="Create Project!">
+      <a class="btn btn-outline-warning" href="/checklists">Return to Projects</a>
+    </div>
+
+  </form>
+
 </div>
+
 <p><%= errorMsg %></p>
 
 <%- include('../partials/footer') %>
+
+<script>
+  const addTaskButton = document.getElementById('addTask');
+  const taskFields = document.getElementById('taskFields');
+  let taskCount = 1;
+
+  addTaskButton.addEventListener('click', () => {
+    const newTask = `
+      <div class="form-group">
+        <label for="task${taskCount + 1}">Task ${taskCount + 1}:</label>
+        <input class="form-control" type="text" id="task${taskCount + 1}" name="tasks">
+      </div>
+    `;
+    taskFields.insertAdjacentHTML('beforeend', newTask);
+    taskCount++;
+  });
+</script>

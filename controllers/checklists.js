@@ -6,7 +6,8 @@ module.exports = {
     create,
     delete: deleteChecklist,
     edit,
-    update
+    updateProjects,
+    updateTasks
     
 };
 
@@ -28,6 +29,7 @@ async function create(req, res) {
 };
 
 async function show(req, res) {
+    console.log('Showing checklist ', req.params.id)
     const selectedProject = await Checklist.findById(req.params.id);
     res.render('checklists/show', {
         checklist: selectedProject
@@ -43,21 +45,48 @@ async function edit(req,res) {
 };
 
 
-async function update(req, res) {
+async function updateTasks(req, res) {
     try {
-        const selectedChecklist = await Checklist.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        console.log('Updating checklist ', req.params.id) 
+        const selectedChecklist = await Checklist.findByIdAndUpdate(req.params.id, {
+            $set: {
+                [`tasksCompletionStatus.${req.body.index}`]: req.body.checked
+            }
+        }, { new: true });
+
         if (!selectedChecklist) {
             return res.status(404).send('No Checklist found with this id');
         } else {
             console.log(selectedChecklist);
-            return res.redirect(`/checklists/${selectedChecklist.id}`);
+            return res.json(selectedChecklist);
         }
-    } catch(arr) {
-        console.log(err);
+    } catch (err) {
+        console.error(err);
         return res.status(500).send('Server error');
     }
+}
 
-};
+async function updateProjects(req, res) {
+    try {
+        console.log('Updating checklist ', req.params.id);
+        const selectedChecklist = await Checklist.findById(req.params.id);
+
+        if (!selectedChecklist) {
+            return res.status(404).send('No Checklist found with this id');
+        }
+
+        selectedChecklist.completed = !selectedChecklist.completed;
+        await selectedChecklist.save();
+
+        console.log(selectedChecklist);
+        return res.redirect('/checklists'); 
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+}
+
+
 
 function newChecklist(req, res) {
     res.render('checklists/new', {errorMsg: ''});

@@ -18,6 +18,10 @@ router.post('/', checklistsCtrl.create);
 
 router.delete('/:id', checklistsCtrl.delete);
 
-router.put('/:id', checklistsCtrl.update);
+router.put('/:id', checklistsCtrl.updateProjects);
+
+router.put('/:id/update', checklistsCtrl.updateTasks);
+
+
 
 module.exports = router;

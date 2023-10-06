@@ -1,32 +1,70 @@
 <%- include('../partials/header') %>
-<div class="container">
-<table class="table">
-<br>
-<h2><%= checklist.projectName %></h2>
-<br>
-<thead class="table-primary">
- <th>Tasks</th>
-  <th>Expected Time</th>
- <th>Due Date</th>
-   </tr>
-</thead>
-<tbody>
-<tr>
- <td><%= checklist.tasks %></td> 
- <td><%= checklist.timeExpected %></td>
-<td><%= checklist.dueDate %></td>  
- </tr>
-  </tbody>
-</table>
-<!-- <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-    <label class="form-check-label" for="flexCheckDefault">
-      Complete
-    </label> -->
-    <br>
-    
-    <a class="btn btn-outline-warning" href="/checklists/<%= checklist.id %>/edit">Edit Checklist</a>
-    <a class="btn btn-outline-primary" href="/checklists">Return to Projects</a>
-</div>
+    <div class="container">
+        <h1 class="mt-5 text-decoration-underline">
+            <%= checklist.projectName %>
+        </h1>
+        <p>Expected Time: <%= checklist.timeExpected %>
+        </p>
+        <p>Due Date: <%= checklist.dueDate %>
+        </p>
 
-<%- include('../partials/footer') %>
+        <h4>Tasks:</h4>
+        <ul>
+            <% for (let i=0; i < checklist.tasks.length; i++) { %>
+                <li>
+                    <input type="checkbox" onchange="updateTaskStatus(this, '<%= i %>', '<%= checklist.id %>')" <% if
+                        (checklist.tasksCompletionStatus[i]) { %> checked <% } %>>
+                        <span class="task-text <%= checklist.tasksCompletionStatus[i] ? 'completed' : '' %>">
+                            <%= checklist.tasks[i] %>
+                        </span>
+                </li>
+                <% } %>
+        </ul>
+        <a class="btn btn-outline-warning" href="/checklists/<%= checklist.id %>/edit">Edit Checklist</a>
+        <a class="btn btn-outline-primary" href="/checklists">Back to Projects</a>
+    </div>
+
+    <%- include('../partials/footer') %>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach((checkbox, index) => {
+                    checkbox.addEventListener("change", function () {
+                        updateTaskStatus(checkbox, index, "<%= checklist.id %>");
+                    });
+
+                    if (checkbox.checked) {
+                        const taskElement = checkbox.parentElement.querySelector(".task-text");
+                        taskElement.style.textDecoration = "line-through";
+                    }
+                });
+            });
+
+            async function updateTaskStatus(checkbox, index, checklistId) {
+                const updatedChecklist = await fetch(`/checklists/${checklistId}/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        index,
+                        checked: checkbox.checked
+                    })
+                });
+
+                if (updatedChecklist.ok) {
+                    const updatedData = await updatedChecklist.json();
+                    checkbox.checked = updatedData.tasksCompletionStatus[index];
+                    const taskElement = checkbox.parentElement.querySelector('.task-text');
+
+                    if (updatedData.tasksCompletionStatus[index]) {
+                        taskElement.style.textDecoration = 'line-through';
+                    } else {
+                        taskElement.style.textDecoration = 'none';
+                    }
+                } else {
+                    console.error('Update failed:', updatedChecklist.status, updatedChecklist.statusText);
+                }
+            }
+        </script>

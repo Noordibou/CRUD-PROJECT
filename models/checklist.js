@@ -17,10 +17,19 @@ const checklistSchema = new Schema({
     },
     dueDate: {
         type: Date,
-        
-    
+        get: (date) => date.toLocaleDateString(),
+        set: (dateString) => new Date(dateString)
+
+
     },
-    
+    tasksCompletionStatus: {
+        type: [Boolean],
+        default: []
+    },
+    completed: {
+        type: Boolean,
+        default: false 
+    }
 
 });
 
