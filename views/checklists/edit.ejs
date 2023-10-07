@@ -1,27 +1,34 @@
 <%- include('../partials/header') %>
     <div class="container">
+        <div class="card p-5 mt-5">
         <h1> Edit Project Checklist</h1>
         <form action="/checklists/<%= checklist.id %>?_method=PUT" method="POST">
             <label for="projectName">Project Name:</label>
             <input class="form-control" type="text" id="projectName" name="projectName"
                 value="<%= checklist.projectName %>">
             <br>
+            <br>
             <label for="tasks">Tasks:</label>
 
-            <input class="form-control" type="text" id="tasks" name="tasks" value="<%= checklist.tasks %>">
-            <br>
-            <label for="timeExpected">Time Expected to Finish:</label>
-            <input class="form-control" type="number" id="timeExpected" name="timeExpected"
-                value="<%= checklist.timeExpected %>">
-            <br>
-            <label for="duedate">Due Date:</label>
-            <input class="form-control" type="date" id="dueDate" name="dueDate"
-                value="<%= checklist.dueDate %>">
-            <br>
-            <br>
-            <input class="btn btn-outline-success" type="submit" value="Apply modifications">
-            <a class="btn btn-outline-primary" href="/checklists">Back to Projects</a>
+            <!-- Assuming checklist.tasks is an array, use a loop to generate input fields -->
+            <% for (let i=0; i < checklist.tasks.length; i++) { %>
+                <input class="form-control" type="text" id="task_<%= i %>" name="tasks"
+                    value="<%= checklist.tasks[i] %>">
+                <br>
+                <% } %>
+
+                    <label for="timeExpected">Time Expected to Finish:</label>
+                    <input class="form-control" type="number" id="timeExpected" name="timeExpected"
+                        value="<%= checklist.timeExpected %>">
+                    <br>
+                    <label for="dueDate">Due Date:</label>
+                    <input class="form-control" type="date" id="dueDateInput" name="dueDate"
+                        value="<%= checklist.dueDate %>">
+                    <br>
+                    <br>
+                    <input class="btn btn-outline-success" type="submit" value="Apply modifications">
+                    <a class="btn btn-outline-info" href="/checklists/<%= checklist.id %>">Back to Projects</a>
         </form>
     </div>
-
+    </div>
     <%- include('../partials/footer') %>

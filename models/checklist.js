@@ -19,8 +19,6 @@ const checklistSchema = new Schema({
         type: Date,
         get: (date) => date.toLocaleDateString(),
         set: (dateString) => new Date(dateString)
-
-
     },
     tasksCompletionStatus: {
         type: [Boolean],
@@ -28,10 +26,17 @@ const checklistSchema = new Schema({
     },
     completed: {
         type: Boolean,
-        default: false 
+        default: false
     }
-
 });
 
+// checklistSchema.pre('save', function (next) {
+//     if (this.tasksCompletionStatus.every((status) => status === true)) {
+//         this.completed = true;
+//     } else {
+//         this.completed = false;
+//     }
+//     next();
+// });
 
 module.exports = mongoose.model('Checklist', checklistSchema);

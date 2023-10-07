@@ -7,7 +7,8 @@ module.exports = {
     delete: deleteChecklist,
     edit,
     updateProjects,
-    updateTasks
+    updateTasks,
+    update
     
 };
 
@@ -43,6 +44,36 @@ async function edit(req,res) {
         checklist
     });
 };
+
+async function update(req, res) {
+    try {
+        // Parse and format the date from the input field
+        const dueDate = new Date(req.body.dueDate);
+        const formattedDueDate = dueDate.toISOString().split('T')[0]; // Format as "yyyy-MM-dd"
+
+        const updatedData = {
+            projectName: req.body.projectName,
+            tasks: req.body.tasks,
+            timeExpected: req.body.timeExpected,
+            dueDate: formattedDueDate, // Use the formatted date
+        };
+
+        const selectedChecklist = await Checklist.findByIdAndUpdate(req.params.id, updatedData, { new: true });
+
+        if (!selectedChecklist) {
+            return res.status(404).send('No Checklist found with this id');
+        } else {
+            console.log(selectedChecklist);
+            return res.redirect(`/checklists/${selectedChecklist.id}`);
+        }
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send('Server error');
+    }
+}
+
+
+
 
 
 async function updateTasks(req, res) {

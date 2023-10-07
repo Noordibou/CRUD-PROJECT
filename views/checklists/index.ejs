@@ -1,56 +1,50 @@
 <%- include('../partials/header') %>
-<div class="container">
-    <br>
-    <h2>Projects List</h2>
-    <table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-                <th scope="col">Complete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% checklists.forEach(function(c) { %>
-            <tr>
-              <td>
-                <a type="button" class="btn btn-light <% if (c.completed) { %>completed-project<% } %>" href="/checklists/<%= c.id %>">
-                    <%= c.projectName %>
-                </a>
-            </td>
-                <td>
-                    <form>
-                        <a class="btn btn-outline-warning" href="/checklists/<%= c.id %>/edit">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                    </form>
-                </td>
-                <td>
-                    <form action="/checklists/<%= c.id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-outline-danger" type="submit">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
-                </td>
-                <td>
-                    <form action="/checklists/<%= c.id %>?_method=PUT" method="POST">
-                        <button class="btn btn-outline-success" type="submit">
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            <% }) %>
-        </tbody>
-    </table>
+<div class="container mt-4">
+  <h2 class="mb-4">Projects List</h2>
+  <div class="row">
+    <% checklists.forEach(function(c) { %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body card-bg-color rounded">
+            <h5 class="card-title">
+              <a type="button" class="btn btn-light btn-sm <% if (c.completed) { %>completed-project<% } %>"
+                href="/checklists/<%= c.id %>">
+                <%= c.projectName %>
+              </a>
+            </h5>
+            <p class="card-text">
+              Status: <span class="<%= c.completed ? 'text-success' : 'text-warning' %>">
+                <%= c.completed ? 'Complete' : 'In Progress' %>
+              </span>
+            </p>
+            <div class="d-flex justify-content-between">
+              <form action="/checklists/<%= c.id %>/updateproject?_method=PUT" method="POST">
+                <button class="btn btn-sm <%= c.completed ? 'btn-success' : 'btn-warning' %> complete-button"
+                  data-project-id="<%= c.id %>">
+                  <!-- <%= c.completed ? 'Complete' : 'In Progress' %> -->
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </form>
+              <form action="/checklists/<%= c.id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger btn-sm" type="submit">
+                  <i class="fa-solid fa-xmark"></i> 
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
 </div>
 
 <%- include('../partials/footer') %>
 
 
-<style>
-  .completed-project {
-    text-decoration: line-through;
-}
-</style>
+
+
+    <style>
+      .completed-project {
+        text-decoration: line-through;
+      }
+    </style>

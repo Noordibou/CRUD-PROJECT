@@ -1,6 +1,7 @@
 <%- include('../partials/header') %>
 
 <div class="container mt-5 ">
+  <div class="card p-5 title-text-color">
   <h3>Enter a New Project Checklist</h3>
 
   <form action="/checklists" method="POST" >
@@ -18,7 +19,7 @@
           <input class="form-control" type="text" id="task1" name="tasks">
         </div>
       </div>
-      <button type="button" class="btn btn-outline-primary mt-2" id="addTask">Add Task</button>
+      <button type="button" class="btn btn-outline-secondary mt-2" id="addTask">Add Task</button>
     </div>
 
     <div class="form-group py-2">
@@ -33,11 +34,12 @@
 
     <div class="form-group pt-4">
       <input class="btn btn-outline-success" type="submit" value="Create Project!">
-      <a class="btn btn-outline-warning" href="/checklists">Return to Projects</a>
+      <a class="btn btn-outline-info" href="/checklists">Return to Projects</a>
     </div>
 
   </form>
 
+</div>
 </div>
 
 <p><%= errorMsg %></p>

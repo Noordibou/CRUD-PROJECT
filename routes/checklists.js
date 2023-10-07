@@ -18,9 +18,13 @@ router.post('/', checklistsCtrl.create);
 
 router.delete('/:id', checklistsCtrl.delete);
 
-router.put('/:id', checklistsCtrl.updateProjects);
+router.put('/:id/updateproject', checklistsCtrl.updateProjects);
 
-router.put('/:id/update', checklistsCtrl.updateTasks);
+router.put('/:id/updatetask', checklistsCtrl.updateTasks);
+
+router.put('/:id', checklistsCtrl.update);
+
+
 
 
 
