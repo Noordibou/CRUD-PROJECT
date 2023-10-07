@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card p-5 mt-5">
         <h1> Edit Project Checklist</h1>
-        <form action="/checklists/<%= checklist.id %>?_method=PUT" method="POST">
+        <form action="/<%= checklist.id %>?_method=PUT" method="POST">
             <label for="projectName">Project Name:</label>
             <input class="form-control" type="text" id="projectName" name="projectName"
                 value="<%= checklist.projectName %>">
@@ -22,12 +22,12 @@
                         value="<%= checklist.timeExpected %>">
                     <br>
                     <label for="dueDate">Due Date:</label>
-                    <input class="form-control" type="date" id="dueDateInput" name="dueDate"
+                    <input class="form-control" type="date" id="dueDate" name="dueDate"
                         value="<%= checklist.dueDate %>">
                     <br>
                     <br>
-                    <input class="btn btn-outline-success" type="submit" value="Apply modifications">
-                    <a class="btn btn-outline-info" href="/checklists/<%= checklist.id %>">Back to Projects</a>
+                    <input class="btn btn-outline-success" type="submit" value="Save Changes">
+                    <a class="btn btn-outline-info" href="/<%= checklist.id %>">Back to Lists</a>
         </form>
     </div>
     </div>

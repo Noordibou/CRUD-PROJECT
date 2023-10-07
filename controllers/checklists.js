@@ -12,17 +12,24 @@ module.exports = {
     
 };
 
-async function index(req, res) {
-    const checklistsAll = await Checklist.find({})
-    res.render('checklists/index', {
-        checklists: checklistsAll
+
+function newChecklist(req, res) {
+    res.render('checklists/new', {errorMsg: ''});
+};
+
+async function edit(req,res) {
+    const checklist = await Checklist.findById(req.params.id);
+    res.render('checklists/edit', {
+        title: 'Edit-To-Do',
+        checklist
     });
 };
+
 
 async function create(req, res) {
     try {
         await Checklist.create(req.body);
-        res.redirect('/checklists')
+        res.redirect('/')
     }
     catch (err) {
         res.render('checklists/new', {errorMsg: err.message});
@@ -37,25 +44,22 @@ async function show(req, res) {
     });
 };
 
-async function edit(req,res) {
-    const checklist = await Checklist.findById(req.params.id);
-    res.render('checklists/edit', {
-        title: 'Edit-To-Do',
-        checklist
+async function index(req, res) {
+    const checklistsAll = await Checklist.find({})
+    res.render('checklists/index', {
+        checklists: checklistsAll
     });
 };
 
 async function update(req, res) {
     try {
-        // Parse and format the date from the input field
         const dueDate = new Date(req.body.dueDate);
-        const formattedDueDate = dueDate.toISOString().split('T')[0]; // Format as "yyyy-MM-dd"
 
         const updatedData = {
             projectName: req.body.projectName,
             tasks: req.body.tasks,
             timeExpected: req.body.timeExpected,
-            dueDate: formattedDueDate, // Use the formatted date
+            dueDate: dueDate
         };
 
         const selectedChecklist = await Checklist.findByIdAndUpdate(req.params.id, updatedData, { new: true });
@@ -64,7 +68,7 @@ async function update(req, res) {
             return res.status(404).send('No Checklist found with this id');
         } else {
             console.log(selectedChecklist);
-            return res.redirect(`/checklists/${selectedChecklist.id}`);
+            return res.redirect(`/${selectedChecklist.id}`);
         }
     } catch(err) {
         console.log(err);
@@ -72,13 +76,8 @@ async function update(req, res) {
     }
 }
 
-
-
-
-
 async function updateTasks(req, res) {
     try {
-        console.log('Updating checklist ', req.params.id) 
         const selectedChecklist = await Checklist.findByIdAndUpdate(req.params.id, {
             $set: {
                 [`tasksCompletionStatus.${req.body.index}`]: req.body.checked
@@ -99,7 +98,6 @@ async function updateTasks(req, res) {
 
 async function updateProjects(req, res) {
     try {
-        console.log('Updating checklist ', req.params.id);
         const selectedChecklist = await Checklist.findById(req.params.id);
 
         if (!selectedChecklist) {
@@ -110,19 +108,12 @@ async function updateProjects(req, res) {
         await selectedChecklist.save();
 
         console.log(selectedChecklist);
-        return res.redirect('/checklists'); 
+        return res.redirect('/'); 
     } catch (err) {
         console.error(err);
         return res.status(500).send('Server error');
     }
 }
-
-
-
-function newChecklist(req, res) {
-    res.render('checklists/new', {errorMsg: ''});
-};
-
 
 async function deleteChecklist(req,res) {
     try {
@@ -131,7 +122,7 @@ async function deleteChecklist(req,res) {
             return res.status(404).send('No project found with this id');
         } else {
             console.log(checklist);
-            return res.redirect('/checklists');
+            return res.redirect('/');
         }
     } catch(err) {
         console.log(err);

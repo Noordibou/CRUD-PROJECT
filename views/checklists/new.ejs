@@ -2,12 +2,12 @@
 
 <div class="container mt-5 ">
   <div class="card p-5 title-text-color">
-  <h3>Enter a New Project Checklist</h3>
+  <h3>Enter a New Checklist</h3>
 
-  <form action="/checklists" method="POST" >
+  <form action="/" method="POST" >
 
     <div class="form-group py-2">
-      <h6 for="projectName">Project Name:</h6>
+      <h6 for="projectName">List Name:</h6>
       <input class="form-control" type="text" id="projectName" name="projectName" required>
     </div>
 
@@ -33,8 +33,8 @@
     </div>
 
     <div class="form-group pt-4">
-      <input class="btn btn-outline-success" type="submit" value="Create Project!">
-      <a class="btn btn-outline-info" href="/checklists">Return to Projects</a>
+      <input class="btn btn-outline-success" type="submit" value="Create a List!">
+      <a class="btn btn-outline-info" href="/">Return to Lists</a>
     </div>
 
   </form>

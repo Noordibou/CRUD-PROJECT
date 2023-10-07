@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 <div class="container mt-4">
-  <h2 class="mb-4">Projects List</h2>
+  <h2 class="mb-4">My Lists</h2>
   <div class="row">
     <% checklists.forEach(function(c) { %>
       <div class="col-md-4 mb-4">
@@ -8,7 +8,7 @@
           <div class="card-body card-bg-color rounded">
             <h5 class="card-title">
               <a type="button" class="btn btn-light btn-sm <% if (c.completed) { %>completed-project<% } %>"
-                href="/checklists/<%= c.id %>">
+                href="/<%= c.id %>">
                 <%= c.projectName %>
               </a>
             </h5>
@@ -18,14 +18,14 @@
               </span>
             </p>
             <div class="d-flex justify-content-between">
-              <form action="/checklists/<%= c.id %>/updateproject?_method=PUT" method="POST">
+              <form action="/<%= c.id %>/updateproject?_method=PUT" method="POST">
                 <button class="btn btn-sm <%= c.completed ? 'btn-success' : 'btn-warning' %> complete-button"
                   data-project-id="<%= c.id %>">
                   <!-- <%= c.completed ? 'Complete' : 'In Progress' %> -->
                   <i class="fa-solid fa-check"></i>
                 </button>
               </form>
-              <form action="/checklists/<%= c.id %>?_method=DELETE" method="POST">
+              <form action="/<%= c.id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger btn-sm" type="submit">
                   <i class="fa-solid fa-xmark"></i> 
                 </button>

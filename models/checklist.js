@@ -17,8 +17,8 @@ const checklistSchema = new Schema({
     },
     dueDate: {
         type: Date,
-        get: (date) => date.toLocaleDateString(),
-        set: (dateString) => new Date(dateString)
+        get: date => date.toISOString().slice(0, 10),
+        set: dateString => new Date(dateString)
     },
     tasksCompletionStatus: {
         type: [Boolean],
@@ -30,13 +30,5 @@ const checklistSchema = new Schema({
     }
 });
 
-// checklistSchema.pre('save', function (next) {
-//     if (this.tasksCompletionStatus.every((status) => status === true)) {
-//         this.completed = true;
-//     } else {
-//         this.completed = false;
-//     }
-//     next();
-// });
 
 module.exports = mongoose.model('Checklist', checklistSchema);

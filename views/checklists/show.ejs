@@ -22,8 +22,14 @@
                             </li>
                         <% } %>
                     </ul>
-                    <a class="btn btn-outline-secondary mt-4" href="/checklists/<%= checklist.id %>/edit">Edit Checklist</a>
-                    <a class="btn btn-outline-info mt-4" href="/checklists">Back to Projects</a>
+                    
+                    <a class="btn btn-outline-secondary mt-4" href="/<%= checklist.id %>/edit">Edit Checklist</a>
+                    <!-- <form action="/<%= checklist.id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm" type="submit">
+                          <i class="fa-solid fa-xmark"></i> 
+                        </button>
+                      </form> -->
+                    <a class="btn btn-outline-info mt-4" href="/">Back to Lists</a>
                 </div>
             </div>
         </div>
@@ -49,7 +55,7 @@
             });
 
             async function updateTaskStatus(checkbox, index, checklistId) {
-                const updatedChecklist = await fetch(`/checklists/${checklistId}/updatetask`, {
+                const updatedChecklist = await fetch(`/${checklistId}/updatetask`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -74,4 +80,7 @@
                     console.error('Update failed:', updatedChecklist.status, updatedChecklist.statusText);
                 }
             }
+
+
+
         </script>

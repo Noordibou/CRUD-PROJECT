@@ -7,7 +7,7 @@ var methodOverride = require('method-override');
 require('dotenv').config();
 require('./config/database');
 
-var indexRouter = require('./routes/index');
+// var indexRouter = require('./routes/index');
 var checklistsRouter = require('./routes/checklists');
 
 var app = express();
@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
-app.use('/', indexRouter);
-app.use('/checklists', checklistsRouter);
+// app.use('/', indexRouter);
+app.use('/', checklistsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
